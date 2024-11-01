@@ -1,0 +1,49 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.tableContainer {
+  margin-bottom: 40px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.table th {
+  background-color: gray;
+}
+
+.table tr:hover {
+  background-color: #aa9f9f;
+}
+.button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30%;
+}
+
+.add_button {
+  flex: 1;
+  background-color: rgba(126, 118, 118, 0.527);
+  border-radius: 60px;
+  padding: 10px;
+  border: 2px solid white;
+}

@@ -21,7 +21,7 @@ const studentSchema = z.object({
     .min(8, "Password must have more than 8 characters"),
   name: z.string().min(1, "Name is required"),
   principalId: z.number().int().positive("Principal ID is required"),
-  teacherId: z.number().int().optional(), // Optional as per the schema
+  teacherId: z.number().int().optional(), 
 });
 
 export async function POST(request: Request) {
@@ -56,17 +56,17 @@ export async function POST(request: Request) {
     const { password: newStudentPassword, ...rest } = newStudent;
 
     // Insert the student into MySQL, ensuring unique email
-    const connection = await mysql.createConnection(connectionParams);
-    const insertQuery = `
-      INSERT INTO student (email, password, name, principalId, teacherId)
-      SELECT ?, ?, ?, ?, ?
-      FROM DUAL
-      WHERE NOT EXISTS (SELECT 1 FROM student WHERE email = ?)
-    `;
-    const values = [email, hashedPassword, name, principalId, teacherId, email];
+    // const connection = await mysql.createConnection(connectionParams);
+    // const insertQuery = `
+    //   INSERT INTO student (email, password, name, principalId, teacherId)
+    //   SELECT ?, ?, ?, ?, ?
+    //   FROM DUAL
+    //   WHERE NOT EXISTS (SELECT 1 FROM student WHERE email = ?)
+    // `;
+    // const values = [email, hashedPassword, name, principalId, teacherId, email];
 
-    await connection.execute(insertQuery, values);
-    await connection.end();
+    // await connection.execute(insertQuery, values);
+    // await connection.end();
 
     // Respond with the created student data excluding the password
     return NextResponse.json(

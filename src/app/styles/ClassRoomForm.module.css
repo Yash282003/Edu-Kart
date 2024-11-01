@@ -1,0 +1,77 @@
+.classroomContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+  }
+  
+  .classroomForm {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .classroomForm h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: black;
+  }
+  
+  .classroomForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .classroomForm input,
+  .classroomForm select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: black;
+  }
+  
+  .classroomButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .classroomButton:hover {
+    background-color: #005bb5;
+  }
+  
+  .message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .classroomLinkText {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .classroomLink {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  
+  .classroomLink:hover {
+    text-decoration: underline;
+  }
+  

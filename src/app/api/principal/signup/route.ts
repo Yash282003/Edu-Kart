@@ -26,6 +26,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { email, password, name } = userSchema.parse(body); 
 
+    // Check if a user with the given email already exists
     const existingUserByEmail = await db.principal.findUnique({
       where: { email },
     });
@@ -37,8 +38,10 @@ export async function POST(request: Request) {
       );
     }
 
+    // Hash the user's password
     const hashedPassword = await hash(password, 10);
 
+    // Create a new principal in the database using Prisma
     const newUser = await db.principal.create({
       data: {
         email,
@@ -46,8 +49,11 @@ export async function POST(request: Request) {
         name,
       },
     });
-    const { password: newUserPassword, ...rest } = newUser;
 
+    // Extract the principalId and other details except the password
+    const { id: principalId, password: newUserPassword, ...rest } = newUser;
+
+    // Insert the principal into the MySQL database, avoiding duplicates
     const connection = await mysql.createConnection(connectionParams);
     const insertQuery = `
       INSERT INTO principal (email, password, name, createdAt, updatedAt)
@@ -60,9 +66,9 @@ export async function POST(request: Request) {
     await connection.execute(insertQuery, values);
     await connection.end();
 
-    // Respond with the created user data excluding the password
+    // Respond with the created user data excluding the password and include the principalId
     return NextResponse.json(
-      { user: rest, message: "User created successfully..." },
+      { user: { principalId, ...rest }, message: "User created successfully..." },
       { status: 201 }
     );
   } catch (err) {

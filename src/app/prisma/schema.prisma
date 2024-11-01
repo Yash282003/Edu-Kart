@@ -66,3 +66,5 @@ model StudentClassroom {
 
   @@unique([studentId, classroomId]) // Ensure that the combination of student and classroom is unique
 }
+
+
