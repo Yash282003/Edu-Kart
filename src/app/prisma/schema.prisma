@@ -44,7 +44,10 @@ model Student {
   teacher     Teacher?           @relation(fields: [teacherId], references: [id])
   teacherId   Int?
   classrooms  StudentClassroom[]
+  classroom   Classroom?         @relation(fields: [classroomId], references: [id]) // New relation
+  classroomId Int?               // Foreign key for Classroom
 }
+
 
 model Classroom {
   id          Int                @id @default(autoincrement())
