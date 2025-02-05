@@ -3,30 +3,12 @@ import mysql from "mysql2/promise";
 import { db } from "@/lib/db";
 import { hash } from "bcrypt";
 import { z } from "zod";
-
-let connectionParams = {
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "WJ28@krhps",
-  database: "school",
-};
-
-// Define schema for Student
-const studentSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Invalid email"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must have more than 8 characters"),
-  name: z.string().min(1, "Name is required"),
-  principalId: z.number().int().positive("Principal ID is required"),
-  teacherId: z.number().int().optional(), 
-});
+import { studentSchema } from "../../schemas/student";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const classroomId = body.classroomId;
     const { email, password, name, principalId, teacherId } = studentSchema.parse(body);
 
     // Check if the student already exists by email
@@ -53,6 +35,14 @@ export async function POST(request: Request) {
         teacherId, 
       },
     });
+
+    const studentClassroom = db.studentClassroom.create({
+      data:{
+        studentId: newStudent.id,
+        classroomId
+      }
+    })
+
     const { password: newStudentPassword, ...rest } = newStudent;
 
     // Insert the student into MySQL, ensuring unique email
@@ -70,7 +60,7 @@ export async function POST(request: Request) {
 
     // Respond with the created student data excluding the password
     return NextResponse.json(
-      { student: rest, message: "Student created successfully..." },
+      { student: rest, message: "Student created successfully... And its classroom assigned" },
       { status: 201 }
     );
   } catch (err) {

@@ -33,31 +33,28 @@ model Teacher {
 }
 
 model Student {
-  id          Int                @id @default(autoincrement())
-  email       String             @unique
-  password    String
-  name        String
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-  principal   Principal          @relation(fields: [principalId], references: [id])
-  principalId Int
-  teacher     Teacher?           @relation(fields: [teacherId], references: [id])
-  teacherId   Int?
-  classrooms  StudentClassroom[]
-  classroom   Classroom?         @relation(fields: [classroomId], references: [id]) // New relation
-  classroomId Int?               // Foreign key for Classroom
+  id           Int                @id @default(autoincrement())
+  email        String             @unique
+  password     String
+  name         String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  principal    Principal          @relation(fields: [principalId], references: [id])
+  principalId  Int
+  teacher      Teacher?           @relation(fields: [teacherId], references: [id])
+  teacherId    Int?
+  classrooms   StudentClassroom[] // Many-to-many relation via StudentClassroom
 }
 
-
 model Classroom {
-  id          Int                @id @default(autoincrement())
-  subject     String
-  description String
-  teacher     Teacher            @relation(fields: [teacherId], references: [id])
-  teacherId   Int
-  principal   Principal          @relation(fields: [principalId], references: [id])
-  principalId Int
-  students    StudentClassroom[]
+  id           Int                @id @default(autoincrement())
+  subject      String
+  description  String
+  teacher      Teacher            @relation(fields: [teacherId], references: [id])
+  teacherId    Int
+  principal    Principal          @relation(fields: [principalId], references: [id])
+  principalId  Int
+  students     StudentClassroom[] // Many-to-many relation via StudentClassroom
 }
 
 model StudentClassroom {
@@ -67,7 +64,7 @@ model StudentClassroom {
   classroom    Classroom @relation(fields: [classroomId], references: [id])
   classroomId  Int
 
-  @@unique([studentId, classroomId]) // Ensure that the combination of student and classroom is unique
+  @@unique([studentId, classroomId]) // Ensure the pair is unique
 }
 
 
